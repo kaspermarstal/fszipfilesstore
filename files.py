@@ -4,7 +4,7 @@ Files Pipeline
 See documentation in topics/media-pipeline.rst
 """
 
-import hashlib
+from hashlib import md5
 import os
 
 from scrapy.pipelines.files import FilesPipeline, FSFilesStore, S3FilesStore
@@ -31,7 +31,7 @@ class FSZipFilesStore(object):
             with zipfile.ZipFile(self.zip_filesystem_path) as zf:
                 zipinfo = zf.getinfo(path)
                 last_modified = datetime(*zipinfo.date_time)
-                checksum = md5sum(zf.extract(zipinfo))
+                checksum = md5(zf.extract(zipinfo))
         except:  # FIXME: catching everything!
             return {}
 
